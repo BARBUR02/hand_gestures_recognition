@@ -1,0 +1,16 @@
+[project]
+name = "hand-gesture-detector"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "mediapipe>=0.10.31",
+    "numpy>=2.4.0",
+    "opencv-python>=4.11.0.86",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+run-hand-detector = "hand_gesture_detector:run_detector"

@@ -1,0 +1,17 @@
+version: '3'
+
+tasks:
+  download-model:
+    desc: Downloads the MediaPipe Hand Landmarker model to the models directory
+    cmds:
+      - mkdir -p models
+      - curl -L -o models/hand_landmarker.task https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task
+    status:
+      - test -f models/hand_landmarker.task
+
+  run-hand-detector:
+    desc: Runs the MediaPipe Hand Landmarker on a sample image
+    cmds:
+      - uv run --package hand-gesture-detector run-hand-detector
+    deps:
+      - download-model

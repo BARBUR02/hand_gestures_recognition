@@ -1,0 +1,13 @@
+[project]
+name = "hand-gestures-recognition"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = ["hand-gesture-detector"]
+
+[tool.uv.sources]
+hand-gesture-detector = { workspace = true }
+
+[tool.uv.workspace]
+members = [
+    "hand-gesture-detector",
+]
