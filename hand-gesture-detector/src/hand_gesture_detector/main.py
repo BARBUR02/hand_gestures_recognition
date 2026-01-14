@@ -3,12 +3,14 @@ import time
 from hand_gesture_detector.config import AppConfig
 from hand_gesture_detector.detector import HandDetector
 from hand_gesture_detector.visualizer import FrameDrawer
+from hand_gesture_detector.gesture_detector import GestureDetector
 
 
 def main():
     config = AppConfig()
     detector = HandDetector(config)
     drawer = FrameDrawer()
+    gesture_detector = GestureDetector()
 
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, config.cam_width)
@@ -35,6 +37,9 @@ def main():
             result = detector.get_latest_result()
 
             drawer.draw_landmarks(frame, result)
+
+            gesture = (gesture_detector.detect_global_gesture(result.hand_landmarks) if result and result.hand_landmarks else None)
+            drawer.draw_gesture_indicator(frame, gesture)
 
             curr_time = time.time()
             fps = 1 / (curr_time - prev_time) if (curr_time - prev_time) > 0 else 0

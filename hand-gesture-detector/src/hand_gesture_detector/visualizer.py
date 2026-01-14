@@ -56,3 +56,21 @@ class FrameDrawer:
         cv2.putText(
             frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, status_color, 2
         )
+    
+    def draw_gesture_indicator(self, frame: np.ndarray, gesture: str | None) -> None:
+        h, w, _ = frame.shape
+
+        if gesture == "up":
+            color, label = (0, 255, 0), "THUMB UP"
+        elif gesture == "down":
+            color, label = (0, 0, 255), "THUMB DOWN"
+        elif gesture == "heart":
+            color, label = (255, 0, 255), "HEART"
+        else:
+            color, label = (150, 150, 150), "NO GESTURE"
+
+        cv2.rectangle(frame, (w - 120, 20), (w - 20, 120), color, -1)
+        cv2.putText(
+            frame, label, (w - 170, 150),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2
+        )
