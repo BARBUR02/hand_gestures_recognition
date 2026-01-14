@@ -32,7 +32,9 @@ class FrameDrawer:
         self, frame: np.ndarray, result: vision.HandLandmarkerResult
     ) -> None:
         if not result or not result.hand_landmarks:
+            self.draw_thumb_indicator(frame, None)
             return
+
 
         height, width, _ = frame.shape
 
@@ -49,6 +51,9 @@ class FrameDrawer:
             for landmark in hand_landmarks:
                 cx, cy = int(landmark.x * width), int(landmark.y * height)
                 cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+                
+        gesture = self.detect_thumb_gesture(result.hand_landmarks[0])
+        self.draw_thumb_indicator(frame, gesture)
 
     def draw_status(self, frame: np.ndarray, fps: float, hands_detected: int) -> None:
         status_color = (0, 255, 0) if hands_detected > 0 else (0, 0, 255)
@@ -56,3 +61,51 @@ class FrameDrawer:
         cv2.putText(
             frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, status_color, 2
         )
+    
+    def detect_thumb_gesture(self, hand_landmarks) -> str | None:
+        """
+        Returns:
+            'up'   -> thumb up
+            'down' -> thumb down
+            None   -> no gesture
+        """
+        thumb_mcp = hand_landmarks[2]
+        thumb_tip = hand_landmarks[4]
+
+        threshold = 0.05
+
+        if thumb_tip.y < thumb_mcp.y - threshold:
+            return "up"
+        elif thumb_tip.y > thumb_mcp.y + threshold:
+            return "down"
+
+        return None
+    
+    def draw_thumb_indicator(self, frame: np.ndarray, gesture: str | None) -> None:
+        """
+        Draws colored indicator on the right side of the frame
+        """
+        h, w, _ = frame.shape
+
+        if gesture == "up":
+            color = (0, 255, 0)
+            label = "THUMB UP"
+        elif gesture == "down":
+            color = (0, 0, 255)
+            label = "THUMB DOWN"
+        else:
+            color = (150, 150, 150)
+            label = "NO GESTURE"
+
+        cv2.rectangle(frame, (w - 120, 20), (w - 20, 120), color, -1)
+
+        cv2.putText(
+            frame,
+            label,
+            (w - 160, 150),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            color,
+            2,
+        )
+
