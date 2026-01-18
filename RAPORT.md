@@ -66,3 +66,7 @@ System wykrywa do 2 dłoni jednocześnie, rysując na nich 21 punktów charakter
   <img width="250px" src="imgs/thumb_down.png">
   <img width="250px" src="imgs/heart.png">
 </div>
+
+## 6. Podsumowanie
+
+W ramach projektu udało się stworzyć system, który rozpoznaje gesty dłoni w czasie rzeczywistym. Wykorzystuje on do tego biblioteki MediaPipe oraz OpenCV. Kluczowym osiągnięciem jest dość wydajnej architektury, która opiera się na asynchronicznym przetwarzaniu danych. Dzięki temu uzyskaliśmy stabilną płynność obrazu na poziomie 30 FPS. System skutecznie interpretuje gesty (kciuk w górę/dół, serce) poprzez analizę geometryczną 21 punktów charakterystycznych dłoni.
