@@ -8,7 +8,23 @@
 
 Projekt przedstawia system rozpoznawania gestów dłoni działający w czasie rzeczywistym. Wykorzystuje kamerę internetową do przechwytywania obrazu oraz biblioteki MediaPipe i OpenCV do jego analizy. Celem projektu było stworzenie interaktywnego interfejsu reagującego na naturalne gesty użytkownika, takie jak kciuk w górę, kciuk w dół oraz serce wykonane obiema dłońmi.
 
-## 2. Architektura Systemu
+
+## 2. Przegląd literatury
+
+1) Real-Time Hand Gesture Recognition: A Comprehensive Review of Techniques, Applications, and Challenges ~ Aws Saood Mohamed,  Nidaa Flaih Hassan, Abeer Salim Jamil (2024)
+
+Tekst stanowi przegląd stanu wiedzy na temat technologii rozpoznawania gestów dłoni (HGR) w czasie rzeczywistym. Autorzy analizują ewolucję metod – od prostych algorytmów po zaawansowane sieci neuronowe – oraz omawiają ich szerokie zastosowanie (medycyna, bezpieczeństwo, język migowy). Głównym celem pracy jest zidentyfikowanie barier, takich jak wpływ otoczenia czy zapotrzebowanie na moc obliczeniową, oraz wyznaczenie kierunków rozwoju dla bardziej intuicyjnych systemów przyszłości.
+
+2) MediaPipe Hands: On-device Real-time Hand Tracking ~ Fan Zhang, Valentin Bazarevsky, Andrey Vakunov, Andrei Tkachenka, George Sung, Chuo-Ling Chang, Matthias Grundmann (2020)
+
+W ramach prac wykorzystano rozwiązanie MediaPipe Hands do śledzenia szkieletu dłoni w czasie rzeczywistym przy użyciu pojedynczej kamery RGB. System oparto na dwuetapowym potoku przetwarzania: detektorze wyznaczającym ramkę dłoni oraz modelu estymacji 21 punktów charakterystycznych. Rozwiązanie zapewnia wysoką precyzję i wydajność na mobilnych układach GPU, co jest kluczowe dla zastosowań w systemach AR/VR.
+
+3) Real-Time Hand Tracking and Gesture Recognition with MediaPipe: Rerun Showcase ~ Andreas Naoum (2024)
+
+Artykuł prezentuje połączenie biblioteki MediaPipe z narzędziem Rerun do wizualizacji śledzenia dłoni i gestów w czasie rzeczywistym. Przedstawia sposób przetwarzania obrazu z kamery na trójwymiarowe punkty charakterystyczne dłoni. Skupia się na praktycznym wdrożeniu systemu, który interpretuje ruchy użytkownika jako konkretne polecenia. Całość stanowi demonstrację budowy wydajnych i czytelnych interfejsów opartych na gestach.
+
+
+## 3. Architektura Systemu
 
 System składa się z czterech głównych modułów:
 
@@ -21,7 +37,7 @@ System składa się z czterech głównych modułów:
 - FrameDrawer (`visualizer.py`) - Rysuje szkielet dłoni (zielone linie między punktami, czerwone kropki na stawach), wyświetla status systemu (FPS, liczba wykrytych dłoni) oraz kolorowy wskaźnik rozpoznanego gestu.
 - Main (`main.py`) - Główna pętla programu. Wizualizacja i przekazywanie obrazków z kamery do detektora co 50ms.
 
-### 2.5 Działanie systemu
+### 4. Działanie systemu
 
 Proces detekcji odbywa się asynchronicznie w osobnym wątku, co pozwala uniknąć blokowania głównej pętli programu. Wyniki są buforowane i pobierane co 50 milisekund, zapewniając płynność działania nawet przy zmiennym obciążeniu procesora. Po otrzymaniu współrzędnych punktów charakterystycznych, moduł `GestureDetector` przeprowadza analizę geometryczną układu palców.
 
@@ -31,7 +47,7 @@ Projekt wykorzystuje menadżer pakietów **uv** do zarządzania środowiskiem wi
 
 Co do wydajności, to system osiąga ~30 FPS na standardowym sprzęcie z kamerą 640×480. Asynchroniczne przetwarzanie z interwałem 50ms zapewnia płynne działanie bez większych opóźnień.
 
-## 3. Prezentacja Działania
+## 5. Prezentacja Działania
 
 ### Wykrywanie Dłoni
 
