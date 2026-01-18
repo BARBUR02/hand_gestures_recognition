@@ -37,6 +37,11 @@ System składa się z czterech głównych modułów:
 - FrameDrawer (`visualizer.py`) - Rysuje szkielet dłoni (zielone linie między punktami, czerwone kropki na stawach), wyświetla status systemu (FPS, liczba wykrytych dłoni) oraz kolorowy wskaźnik rozpoznanego gestu.
 - Main (`main.py`) - Główna pętla programu. Wizualizacja i przekazywanie obrazków z kamery do detektora co 50ms.
 
+<div style="text-align:center">
+<img width="500px" src="imgs/arch_chart.png">
+</div>
+
+
 ### 4. Działanie systemu
 
 Proces detekcji odbywa się asynchronicznie w osobnym wątku, co pozwala uniknąć blokowania głównej pętli programu. Wyniki są buforowane i pobierane co 50 milisekund, zapewniając płynność działania nawet przy zmiennym obciążeniu procesora. Po otrzymaniu współrzędnych punktów charakterystycznych, moduł `GestureDetector` przeprowadza analizę geometryczną układu palców.
