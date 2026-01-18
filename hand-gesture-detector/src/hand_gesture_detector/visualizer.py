@@ -66,6 +66,14 @@ class FrameDrawer:
             color, label = (0, 0, 255), "THUMB DOWN"
         elif gesture == "heart":
             color, label = (255, 0, 255), "HEART"
+        elif gesture == "palm":
+            color, label = (0, 255, 255), "OPEN PALM"
+        elif gesture == "fist":
+            color, label = (0, 0, 150), "FIST"
+        elif gesture == "peace":
+            color, label = (255, 100, 0), "PEACE"
+        elif gesture == "ok":
+            color, label = (100, 255, 100), "OK"
         else:
             color, label = (150, 150, 150), "NO GESTURE"
 

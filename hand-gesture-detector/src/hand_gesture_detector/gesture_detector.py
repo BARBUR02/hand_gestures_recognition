@@ -19,6 +19,39 @@ class GestureDetector:
 
         return None
 
+    def detect_shape_gesture(self, hand_landmarks) -> Optional[str]:
+        # Finger tip indices: index(8), middle(12), ring(16), pinky(20)
+        # Finger PIP indices: index(6), middle(10), ring(14), pinky(18)
+        tips = [8, 12, 16, 20]
+        pips = [6, 10, 14, 18]
+
+        wrist = hand_landmarks[0]
+        extended = []
+        for tip, pip in zip(tips, pips):
+            # Check if finger is extended (distance from tip to wrist > distance from PIP joint to wrist)
+            is_ext = self._dist(hand_landmarks[tip], wrist) > self._dist(hand_landmarks[pip], wrist)
+            extended.append(is_ext)
+
+        # 1. PALM (All fingers extended)
+        if all(extended):
+            return "palm"
+
+        # 2. FIST (All fingers folded)
+        if not any(extended):
+            return "fist"
+
+        # 3. PEACE (Index and middle extended, ring and pinky folded)
+        if extended == [True, True, False, False]:
+            return "peace"
+
+        # 4. OK (Thumb and index touch, other fingers extended)
+        thumb_tip = hand_landmarks[4]
+        index_tip = hand_landmarks[8]
+        if self._dist(thumb_tip, index_tip) < 0.05 and extended[1] and extended[2] and extended[3]:
+            return "ok"
+
+        return None
+
     def detect_heart_gesture(self, hands_landmarks) -> bool:
         if len(hands_landmarks) != 2:
             return False
@@ -59,12 +92,17 @@ class GestureDetector:
         has_thumb_down = False
 
         for hand in hands_landmarks:
-            g = self.detect_thumb_gesture(hand)
-
-            if g == "up":
+            # Check for thumb up/down first
+            thumb_g = self.detect_thumb_gesture(hand)
+            if thumb_g == "up":
                 return "up"
-            if g == "down":
+            if thumb_g == "down":
                 has_thumb_down = True
+
+            # Check for other shapes
+            shape_g = self.detect_shape_gesture(hand)
+            if shape_g:
+                return shape_g
 
         if has_thumb_down:
             return "down"
