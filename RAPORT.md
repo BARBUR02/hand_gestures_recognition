@@ -126,5 +126,5 @@ Kod jest modułowy i łatwo rozszerzalny o nowe gesty poprzez dodanie kolejnych 
 3.  Naoum, A. (2024). *Real-Time Hand Tracking and Gesture Recognition with MediaPipe: Rerun Showcase*.
 4.  Dokumentacja Google MediaPipe: [https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker)
 5.  Pomocnicze materiały wideo:
-    * *Sign Language Detection with Python and Scikit Learn* (YouTube): https://www.youtube.com/watch?v=doDUihpj6ro
-    * *AI Hand Gesture Recognition using Python and MediaPipe* (YouTube): https://www.youtube.com/watch?v=a99p_fAr6e4
+    * *Sign Language Detection with Python and Scikit Learn* (YouTube): [https://www.youtube.com/watch?v=doDUihpj6ro](https://www.youtube.com/watch?v=doDUihpj6ro)
+    * *AI Hand Gesture Recognition using Python and MediaPipe* (YouTube): [https://www.youtube.com/watch?v=a99p_fAr6e4](https://www.youtube.com/watch?v=a99p_fAr6e4)
